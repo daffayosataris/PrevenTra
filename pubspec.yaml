@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  encrypt: ^5.0.3
+  file_picker: ^8.0.0
+
   # --- CORE ---
   provider: ^6.1.2
   get_it: ^7.7.0
