@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/datasources/database_helper.dart';
 import '../../data/models/account_model.dart';
-import '../../data/datasources/hibp_service.dart'; // Import Service Baru
+import '../../data/datasources/hibp_service.dart'; 
 
 class VaultProvider extends ChangeNotifier {
   List<AccountModel> _accounts = [];
@@ -23,13 +23,8 @@ class VaultProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addAccount(String title, String username, String password) async {
-    final newAccount = AccountModel(
-      title: title,
-      username: username,
-      password: password,
-      createdAt: DateTime.now().toString(),
-    );
+  // PERBAIKAN 1: Sekarang menerima tipe data AccountModel secara utuh
+  Future<void> addAccount(AccountModel newAccount) async {
     await DatabaseHelper().insertAccount(newAccount);
     await loadAccounts();
   }
@@ -40,8 +35,13 @@ class VaultProvider extends ChangeNotifier {
     await loadAccounts();
   }
 
+  // Fungsi Edit Akun
+  Future<void> updateAccount(AccountModel account) async {
+    await DatabaseHelper().updateAccount(account); 
+    await loadAccounts();
+  }
+
   // --- FUNGSI BARU: AUDIT SECURITY ---
-  // Mengembalikan String pesan hasil audit
   Future<String> checkSinglePassword(String password) async {
     int leaks = await HibpService().checkPasswordSafety(password);
     

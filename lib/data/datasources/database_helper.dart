@@ -76,4 +76,16 @@ class DatabaseHelper {
       return AccountModel.fromMap(maps[i]);
     });
   }
+
+// --- FUNGSI BARU UNTUK EDIT DATA ---
+  Future<int> updateAccount(AccountModel account) async {
+    final db = await database;
+    return await db.update(
+      'accounts',
+      account.toMap(),
+      where: 'id = ?',
+      whereArgs: [account.id],
+    );
+  }
+
 }
