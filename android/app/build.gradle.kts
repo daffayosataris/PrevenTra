@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id("com.google.gms.google-services")
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -24,7 +25,7 @@ android {
     defaultConfig {
         applicationId = "com.preventra.preventra"
         // --- UBAH BAGIAN INI JADI ANGKA 23 (WAJIB) ---
-        minSdk = flutter.minSdkVersion 
+        minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -43,5 +44,5 @@ flutter {
 
 // --- TAMBAHKAN BAGIAN DEPENDENCIES INI DI PALING BAWAH FILE ---
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }

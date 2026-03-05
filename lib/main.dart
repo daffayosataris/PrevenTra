@@ -1,42 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-// Import Provider & Page yang sudah kita buat kemarin
-import 'package:preventra/presentation/providers/vault_provider.dart';
-import 'package:preventra/presentation/pages/vault_page.dart';
-import 'package:preventra/presentation/pages/auth_page.dart';
+import 'package:provider/provider.dart'; // 👉 KUNCI JAWABAN: Import Provider
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'core/utils/background_audit_service.dart'; 
+import 'presentation/providers/vault_provider.dart'; // 👉 KUNCI JAWABAN: Import VaultProvider
+import 'presentation/pages/auth_page.dart';
 
-void main() {
-  runApp(const PreventraApp());
+// FUNGSI WAJIB: Harus berada di luar class (Top-Level Function)
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  if (message.data.isNotEmpty) {
+    if (message.data['action'] == 'TRIGGER_AUDIT') {
+      await BackgroundAuditService.initNotifications();
+      await BackgroundAuditService.executeSilentAudit();
+    }
+  }
 }
 
-class PreventraApp extends StatelessWidget {
-  const PreventraApp({super.key});
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await BackgroundAuditService.initNotifications();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  // Meminta Izin & Mengambil Token FCM
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  await messaging.requestPermission(alert: true, badge: true, sound: true);
+  
+  String? token = await messaging.getToken();
+  print("\n====== T O K E N   F C M   H P   I N I ======");
+  print(token);
+  print("=============================================\n");
+
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // KITA BUNGKUS APLIKASI DENGAN MULTIPROVIDER
-    // Agar "Otak" aplikasi (VaultProvider) bisa diakses dari mana saja
+    // 👉 PERBAIKAN: Membungkus aplikasi dengan MultiProvider agar data tidak hilang
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => VaultProvider()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
         title: 'PrevenTra',
-        theme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: const Color(0xFF00FF00), // Hijau Hacker
-          scaffoldBackgroundColor: const Color(0xFF121212), // Hitam Pekat
-          useMaterial3: true,
-          colorScheme: ColorScheme.dark(
-            primary: const Color(0xFF00FF00),
-            secondary: Colors.greenAccent,
-            surface: const Color(0xFF1E1E1E),
-          ),
-        ),
-        // --- BAGIAN PENTING: GANTI HOME JADI VAULT PAGE ---
-        // Jangan pakai HomePage() yang lama, tapi pakai VaultPage()
+        theme: ThemeData.dark(),
         home: const AuthPage(),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "946177647522",
+    "project_id": "preventra-66769",
+    "storage_bucket": "preventra-66769.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946177647522:android:cf12c43e7e632bf254c8fb",
+        "android_client_info": {
+          "package_name": "com.preventra.preventra"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbO_6V8S8ZAQu3vrmcmkrGZCFcFRuZjEc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
