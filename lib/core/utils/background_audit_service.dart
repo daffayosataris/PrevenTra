@@ -10,7 +10,6 @@ class BackgroundAuditService {
     const AndroidInitializationSettings androidInitSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
     const InitializationSettings initSettings = InitializationSettings(android: androidInitSettings);
 
-    // KUNCI JAWABAN 1: Parameter bernama 'settings:'
     await _notificationsPlugin.initialize(
       settings: initSettings,
     );
@@ -45,11 +44,13 @@ class BackgroundAuditService {
 
   static Future<void> _showBreachNotification(int leakCount, List<String> leakedAccounts) async {
     const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'breach_alert_channel',
-      'Peringatan Kebocoran Data',
-      channelDescription: 'Notifikasi darurat saat data terdeteksi bocor di internet',
-      importance: Importance.max,
-      priority: Priority.high,
+      'breach_alert_loud_v1', 
+      'Peringatan Kebocoran (Darurat)',
+      channelDescription: 'Notifikasi darurat bersuara nyaring saat data bocor',
+      importance: Importance.max, 
+      priority: Priority.high,    
+      playSound: true,            
+      enableVibration: true,      
       color: Color(0xFFFF0000), 
       icon: '@mipmap/ic_launcher',
     );
@@ -58,12 +59,12 @@ class BackgroundAuditService {
 
     String bodyText = "Bahaya! $leakCount akun Anda (${leakedAccounts.join(', ')}) terdeteksi bocor di database peretas. Segera ganti sandi Anda!";
 
-    // KUNCI JAWABAN 2: Menggunakan format named parameter
     await _notificationsPlugin.show(
-      id: 0,
+      id: 1, 
       title: '⚠️ PERINGATAN KEBOCORAN DATA',
       body: bodyText,
       notificationDetails: platformDetails,
     );
   }
 }
+

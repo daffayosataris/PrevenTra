@@ -51,13 +51,108 @@ class _ToolsPageState extends State<ToolsPage> {
     String generatedPassword = "Klik 'GENERATE' 👇";
 
     // Kamus kata sederhana untuk Passphrase (Bisa ditambah ratusan kata lagi nanti)
-    final List<String> kamusIndo = [
-      'gajah', 'kucing', 'mobil', 'sepeda', 'gunung', 'laut', 'langit', 'bintang', 
-      'kopi', 'buku', 'meja', 'pintu', 'rumah', 'jendela', 'kaca', 'lampu', 
-      'merah', 'biru', 'hijau', 'hitam', 'putih', 'besar', 'kecil', 'cepat', 
-      'lambat', 'kuat', 'pintar', 'maju', 'sukses', 'jaya', 'elang', 'harimau',
-      'laptop', 'kode', 'data', 'sistem', 'aman', 'kunci', 'awan', 'angin'
-    ];
+      final List<String> kamusIndo = [
+    // Hewan
+    'gajah', 'kucing', 'mobil', 'sepeda', 'gunung', 'laut', 'langit', 'bintang',
+    'kopi', 'buku', 'meja', 'pintu', 'rumah', 'jendela', 'kaca', 'lampu',
+    'merah', 'biru', 'hijau', 'hitam', 'putih', 'besar', 'kecil', 'cepat',
+    'lambat', 'kuat', 'pintar', 'maju', 'sukses', 'jaya', 'elang', 'harimau',
+    'laptop', 'kode', 'data', 'sistem', 'aman', 'kunci', 'awan', 'angin',
+
+    // Hewan tambahan
+    'singa', 'kuda', 'sapi', 'ayam', 'bebek', 'kelinci', 'tikus', 'ular',
+    'buaya', 'kura', 'monyet', 'gorila', 'zebra', 'jerapah', 'badak', 'panda',
+    'beruang', 'rubah', 'serigala', 'rusa', 'kancil', 'tupai', 'landak', 'musang',
+    'burung', 'merpati', 'kakaktua', 'merak', 'flamingo', 'pinguin', 'hiu', 'paus',
+    'lumba', 'gurita', 'ubur', 'kepiting', 'udang', 'ikan', 'katak', 'cacing',
+
+    // Alam & Cuaca
+    'hujan', 'petir', 'pelangi', 'banjir', 'salju', 'badai', 'kabut', 'embun',
+    'sungai', 'danau', 'hutan', 'padang', 'bukit', 'lembah', 'pantai', 'pulau',
+    'bumi', 'bulan', 'matahari', 'planet', 'galaksi', 'meteor', 'komet', 'orbit',
+    'tanah', 'pasir', 'batu', 'lumpur', 'karang', 'terumbu', 'savana', 'gurun',
+
+    // Makanan & Minuman
+    'nasi', 'mie', 'soto', 'bakso', 'sate', 'rendang', 'gulai', 'opor',
+    'gado', 'pecel', 'rawon', 'tongseng', 'semur', 'tumis', 'goreng', 'bakar',
+    'tahu', 'tempe', 'oncom', 'kerupuk', 'emping', 'sambal', 'kecap', 'saos',
+    'susu', 'jus', 'teh', 'jahe', 'kunyit', 'rempah', 'bumbu', 'garam',
+    'gula', 'madu', 'coklat', 'keju', 'roti', 'kue', 'puding', 'es',
+    'mangga', 'pisang', 'apel', 'jeruk', 'anggur', 'semangka', 'melon', 'pepaya',
+    'durian', 'rambutan', 'lychee', 'salak', 'jambu', 'nanas', 'sirsak', 'alpukat',
+
+    // Teknologi & Digital
+    'server', 'jaringan', 'internet', 'website', 'aplikasi', 'program', 'robot',
+    'sensor', 'baterai', 'sinyal', 'frekuensi', 'antena', 'satelit', 'radar',
+    'komputer', 'printer', 'scanner', 'monitor', 'keyboard', 'mouse', 'kamera',
+    'ponsel', 'tablet', 'drone', 'wifi', 'bluetooth', 'layar', 'memori', 'prosesor',
+    'algoritma', 'basis', 'cloud', 'enkripsi', 'firewall', 'jaringan', 'protokol',
+
+    // Benda Sehari-hari
+    'kursi', 'lemari', 'kasur', 'bantal', 'selimut', 'tikar', 'karpet', 'cermin',
+    'piring', 'gelas', 'sendok', 'garpu', 'pisau', 'wajan', 'panci', 'kompor',
+    'kulkas', 'mesin', 'pompa', 'ember', 'sapu', 'sikat', 'spons', 'sabun',
+    'pensil', 'pena', 'penggaris', 'gunting', 'lem', 'staples', 'amplop', 'kertas',
+    'tas', 'dompet', 'koper', 'payung', 'topi', 'sarung', 'sepatu', 'sandal',
+    'cincin', 'gelang', 'kalung', 'jam', 'kacamata', 'ikat', 'gesper', 'bros',
+
+    // Profesi & Pekerjaan
+    'dokter', 'guru', 'pilot', 'tentara', 'polisi', 'hakim', 'jaksa', 'notaris',
+    'arsitek', 'insinyur', 'akuntan', 'manajer', 'direktur', 'petani', 'nelayan',
+    'pedagang', 'sopir', 'koki', 'pelayan', 'penjahit', 'tukang', 'montir', 'satpam',
+    'ilmuwan', 'peneliti', 'wartawan', 'fotografer', 'seniman', 'musisi', 'aktor',
+
+    // Tempat & Bangunan
+    'sekolah', 'kampus', 'kantor', 'pabrik', 'toko', 'pasar', 'mall', 'hotel',
+    'rumah sakit', 'klinik', 'apotek', 'masjid', 'gereja', 'pura', 'vihara',
+    'stadion', 'museum', 'galeri', 'perpustakaan', 'bioskop', 'teater', 'taman',
+    'bandara', 'pelabuhan', 'terminal', 'stasiun', 'jembatan', 'terowongan', 'bendungan',
+
+    // Transportasi
+    'motor', 'truk', 'bus', 'kereta', 'pesawat', 'kapal', 'perahu', 'helikopter',
+    'ambulans', 'taksi', 'ojek', 'becak', 'andong', 'traktor', 'forklift', 'crane',
+    'roket', 'kapal selam', 'feri', 'gondola', 'trem', 'metro', 'monorel',
+
+    // Sifat & Kata Sifat
+    'tinggi', 'rendah', 'panjang', 'pendek', 'lebar', 'sempit', 'tebal', 'tipis',
+    'keras', 'lembut', 'kasar', 'halus', 'panas', 'dingin', 'basah', 'kering',
+    'berat', 'ringan', 'gelap', 'terang', 'ramai', 'sepi', 'bersih', 'kotor',
+    'indah', 'jelek', 'bagus', 'buruk', 'mahal', 'murah', 'baru', 'lama',
+    'cerdas', 'bodoh', 'rajin', 'malas', 'berani', 'takut', 'jujur', 'bohong',
+    'baik', 'jahat', 'ramah', 'sombong', 'sabar', 'pemarah', 'dermawan', 'pelit',
+
+    // Olahraga & Aktivitas
+    'sepak bola', 'basket', 'voli', 'renang', 'lari', 'tinju', 'gulat', 'panahan',
+    'mendaki', 'bersepeda', 'yoga', 'senam', 'tenis', 'bulu tangkis', 'golf', 'polo',
+    'memancing', 'berburu', 'berkuda', 'selam', 'surfing', 'panjat', 'lompat', 'lempar',
+
+    // Seni & Budaya
+    'musik', 'lagu', 'tari', 'lukis', 'pahat', 'puisi', 'cerita', 'drama',
+    'wayang', 'batik', 'tenun', 'ukiran', 'anyaman', 'tembikar', 'keramik', 'mosaik',
+    'gamelan', 'angklung', 'sasando', 'kolintang', 'rebab', 'kendang', 'suling', 'kecapi',
+
+    // Ilmu Pengetahuan
+    'fisika', 'kimia', 'biologi', 'matematika', 'sejarah', 'geografi', 'ekonomi', 'sosiologi',
+    'astronomi', 'geologi', 'ekologi', 'psikologi', 'filsafat', 'linguistik', 'arkeologi',
+    'atom', 'molekul', 'elektron', 'proton', 'neutron', 'energi', 'massa', 'gravitasi',
+    'evolusi', 'genetika', 'sel', 'virus', 'bakteri', 'jamur', 'alga', 'enzim',
+
+    // Kata Kerja Umum
+    'makan', 'minum', 'tidur', 'bangun', 'jalan', 'lari', 'loncat', 'renang',
+    'baca', 'tulis', 'gambar', 'hitung', 'pikir', 'rasa', 'dengar', 'lihat',
+    'bicara', 'diam', 'tertawa', 'menangis', 'tersenyum', 'marah', 'takut', 'senang',
+    'kerja', 'belajar', 'bermain', 'istirahat', 'berdoa', 'memasak', 'mencuci', 'menyapu',
+    'membeli', 'menjual', 'meminjam', 'menabung', 'berinvestasi', 'mengirim', 'menerima',
+
+    // Angka & Waktu
+    'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan',
+    'sembilan', 'sepuluh', 'ratus', 'ribu', 'juta', 'miliar',
+    'detik', 'menit', 'jam', 'hari', 'minggu', 'bulan', 'tahun', 'abad',
+    'pagi', 'siang', 'sore', 'malam', 'subuh', 'fajar', 'senja', 'tengah malam',
+    'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu',
+    'januari', 'februari', 'maret', 'april', 'mei', 'juni',
+    'juli', 'agustus', 'september', 'oktober', 'november', 'desember',
+  ];
 
     showModalBottomSheet(
       context: context,

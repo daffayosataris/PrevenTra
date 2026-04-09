@@ -9,11 +9,9 @@ class SimulationPage extends StatefulWidget {
   State<SimulationPage> createState() => _SimulationPageState();
 }
 
-// PERUBAHAN PENTING: Menggunakan TickerProviderStateMixin untuk mendukung >1 Animasi
 class _SimulationPageState extends State<SimulationPage> with TickerProviderStateMixin {
   late TabController _tabController;
   
-  // --- STATE UNTUK ANIMASI BRUTE FORCE ---
   late AnimationController _crackController;
   final TextEditingController _passController = TextEditingController();
   double _entropy = 0;
@@ -22,7 +20,6 @@ class _SimulationPageState extends State<SimulationPage> with TickerProviderStat
   bool _isCracking = false;
   String _crackingText = "MENUNGGU TARGET...";
 
-  // --- STATE UNTUK TAB KUIS PHISHING ---
   int _currentLevel = 1;
   int _currentQuestionIndex = 0;
   int _score = 0;
