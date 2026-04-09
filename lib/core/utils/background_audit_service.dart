@@ -43,8 +43,9 @@ class BackgroundAuditService {
   }
 
   static Future<void> _showBreachNotification(int leakCount, List<String> leakedAccounts) async {
+    // Membuat Channel ID Baru dan Memaksa Suara & Getaran
     const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'breach_alert_loud_v1', 
+      'breach_alert_loud_v1', // ID baru agar Android me-reset aturan suaranya
       'Peringatan Kebocoran (Darurat)',
       channelDescription: 'Notifikasi darurat bersuara nyaring saat data bocor',
       importance: Importance.max, 
@@ -59,12 +60,12 @@ class BackgroundAuditService {
 
     String bodyText = "Bahaya! $leakCount akun Anda (${leakedAccounts.join(', ')}) terdeteksi bocor di database peretas. Segera ganti sandi Anda!";
 
+    // 👉 PERBAIKAN: Menggunakan Named Parameter (id:, title:, body:)
     await _notificationsPlugin.show(
       id: 1, 
-      title: '⚠️ PERINGATAN KEBOCORAN DATA',
+      title: '⚠️ PERINGATAN KEBOCORAN DATA BERBAHAYA!',
       body: bodyText,
       notificationDetails: platformDetails,
     );
   }
 }
-
