@@ -1,0 +1,37 @@
+name: PrevenTra Daily Background Audit
+
+# Kapan robot ini berjalan?
+on:
+  schedule:
+    # Menggunakan Waktu UTC. 
+    # Angka "17" UTC sama dengan jam 00:00 WIB (Tengah Malam) di Indonesia.
+    # Artinya aplikasi Anda akan melakukan audit kebocoran data setiap jam 12 malam.
+    - cron: '0 17 * * *'
+  
+  # Fitur ini memungkinkan Anda menjalankan robot secara manual dengan satu klik di GitHub
+  workflow_dispatch: 
+
+jobs:
+  trigger-audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Mengambil kode sumber dari repository
+        uses: actions/checkout@v4
+
+      - name: 2. Mempersiapkan Mesin Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 3. Menginstal amunisi Firebase Admin
+        run: |
+          python -m pip install --upgrade pip
+          pip install firebase-admin
+
+      - name: 4. Mengeksekusi Penembakan Sinyal Audit!
+        env:
+          # Mengambil rahasia dari GitHub dan menyuntikkannya ke Python
+          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+          FCM_DEVICE_TOKEN: ${{ secrets.FCM_DEVICE_TOKEN }}
+        run: python scripts/trigger_audit.py

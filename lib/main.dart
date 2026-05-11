@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; // 👉 KUNCI JAWABAN: Import Provider
+import 'package:provider/provider.dart'; 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'core/utils/background_audit_service.dart'; 
 import 'presentation/providers/vault_provider.dart'; // 👉 KUNCI JAWABAN: Import VaultProvider
 import 'presentation/pages/auth_page.dart';
 
-// FUNGSI WAJIB: Harus berada di luar class (Top-Level Function)
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();

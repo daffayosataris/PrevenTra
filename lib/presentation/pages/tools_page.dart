@@ -65,7 +65,7 @@ class _ToolsPageState extends State<ToolsPage> {
     'beruang', 'rubah', 'serigala', 'rusa', 'kancil', 'tupai', 'landak', 'musang',
     'burung', 'merpati', 'kakaktua', 'merak', 'flamingo', 'pinguin', 'hiu', 'paus',
     'lumba', 'gurita', 'ubur', 'kepiting', 'udang', 'ikan', 'katak', 'cacing',
-
+ 
     // Alam & Cuaca
     'hujan', 'petir', 'pelangi', 'banjir', 'salju', 'badai', 'kabut', 'embun',
     'sungai', 'danau', 'hutan', 'padang', 'bukit', 'lembah', 'pantai', 'pulau',

@@ -229,9 +229,19 @@ class _SimulationPageState extends State<SimulationPage> with TickerProviderStat
           const SizedBox(height: 30),
           Row(
             children: [
-              Expanded(child: ElevatedButton.icon(style: ElevatedButton.styleFrom(backgroundColor: Colors.orange[800], padding: const EdgeInsets.symmetric(vertical: 15), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))), icon: const Icon(Icons.password, color: Colors.white, size: 20), label: const Text("Coba Brute Force", style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)), onPressed: () => _tabController.animateTo(1))),
+              Expanded(child: ElevatedButton.icon(style: ElevatedButton.styleFrom(backgroundColor:
+               Colors.orange[800], padding: const EdgeInsets.symmetric(vertical: 15), 
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))), 
+              icon: const Icon(Icons.password, color: Colors.white, size: 20), label: 
+              const Text("Coba Brute Force", style: TextStyle
+              (color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)), onPressed: 
+              () => _tabController.animateTo(1))),
               const SizedBox(width: 10),
-              Expanded(child: ElevatedButton.icon(style: ElevatedButton.styleFrom(backgroundColor: Colors.blue[800], padding: const EdgeInsets.symmetric(vertical: 15), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))), icon: const Icon(Icons.phishing, color: Colors.white, size: 20), label: const Text("Mulai Kuis", style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)), onPressed: () => _tabController.animateTo(2))),
+              Expanded(child: ElevatedButton.icon(style: ElevatedButton.styleFrom(backgroundColor: 
+              Colors.blue[800], padding: const EdgeInsets.symmetric(vertical: 15), shape: RoundedRectangleBorder(borderRadius: 
+              BorderRadius.circular(10))), icon: const Icon(Icons.phishing, color: Colors.white, size: 20), label: 
+              const Text("Mulai Kuis", style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold)),
+               onPressed: () => _tabController.animateTo(2))),
             ],
           ),
           const SizedBox(height: 20),
@@ -375,12 +385,32 @@ class _SimulationPageState extends State<SimulationPage> with TickerProviderStat
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(width: double.infinity, padding: const EdgeInsets.symmetric(vertical: 10), margin: const EdgeInsets.only(bottom: 20), decoration: BoxDecoration(color: levelColor.withOpacity(0.2), borderRadius: BorderRadius.circular(10), border: Border.all(color: levelColor)), child: Center(child: Text("LEVEL $_currentLevel : $difficultyText", style: TextStyle(color: levelColor, fontWeight: FontWeight.bold, letterSpacing: 2)))),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("Skenario ${_currentQuestionIndex + 1} / ${currentScenarios.length}", style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)), Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(color: Colors.blueAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.blueAccent)), child: Text("Skor: $_score", style: const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold)))]),
+          Container(width: double.infinity, padding: const EdgeInsets.symmetric(vertical: 10), margin: const EdgeInsets.only(bottom: 20), decoration: 
+          BoxDecoration(color: levelColor.withOpacity(0.2), borderRadius: BorderRadius.circular(10), border: Border.all(color: levelColor)), child:
+          Center(child: Text("LEVEL $_currentLevel : $difficultyText", style: TextStyle(color: levelColor, fontWeight: FontWeight.bold, letterSpacing: 2)))),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("Skenario ${_currentQuestionIndex + 1} / ${currentScenarios.length}", 
+          style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)), Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(color: Colors.blueAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.blueAccent)), 
+          child: Text("Skor: $_score", style: const TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold)))]),
           const SizedBox(height: 20),
-          Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Row(children: [const CircleAvatar(backgroundColor: Colors.blue, child: Icon(Icons.email, color: Colors.white, size: 20)), const SizedBox(width: 15), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(scenario['title'], style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16)), Text(scenario['sender'], style: TextStyle(color: Colors.grey[600], fontSize: 12))]))]), const Divider(height: 30, color: Colors.grey), Text(scenario['content'], style: const TextStyle(color: Colors.black87, fontSize: 14, height: 1.5))])),
+          Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)), child: Column(crossAxisAlignment:
+          CrossAxisAlignment.start, children: [Row(children: [const CircleAvatar(backgroundColor: Colors.blue, child: Icon(Icons.email, color: Colors.white, size: 20)), 
+          const SizedBox(width: 15), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(scenario['title'], style: const TextStyle(color: Colors.black, 
+          fontWeight: FontWeight.bold, fontSize: 16)), Text(scenario['sender'], style: TextStyle(color: Colors.grey[600], fontSize: 12))]))]), const Divider(height: 30, color: Colors.grey),
+          Text(scenario['content'], style: const TextStyle(color: Colors.black87, fontSize: 14, height: 1.5))])),
           const SizedBox(height: 30),
-          if (!_showExplanation) ...[const Center(child: Text("Apakah pesan di atas Aman atau Phishing?", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold))), const SizedBox(height: 20), Row(children: [Expanded(child: ElevatedButton.icon(style: ElevatedButton.styleFrom(backgroundColor: Colors.red[800], padding: const EdgeInsets.symmetric(vertical: 15), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))), icon: const Icon(Icons.warning, color: Colors.white), label: const Text("PHISHING!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)), onPressed: () => _answerQuestion(true))), const SizedBox(width: 15), Expanded(child: ElevatedButton.icon(style: ElevatedButton.styleFrom(backgroundColor: Colors.green[800], padding: const EdgeInsets.symmetric(vertical: 15), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))), icon: const Icon(Icons.verified_user, color: Colors.white), label: const Text("AMAN", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)), onPressed: () => _answerQuestion(false)))])] else ...[Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: _isCorrect ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1), borderRadius: BorderRadius.circular(15), border: Border.all(color: _isCorrect ? Colors.green : Colors.red, width: 2)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Row(children: [Icon(_isCorrect ? Icons.check_circle : Icons.cancel, color: _isCorrect ? Colors.green : Colors.red, size: 30), const SizedBox(width: 10), Expanded(child: Text(_isCorrect ? "TEPAT SEKALI!" : "UPS, ANDA TERJEBAK HACKER!", style: TextStyle(color: _isCorrect ? Colors.green : Colors.red, fontWeight: FontWeight.bold, fontSize: 16)))]), const SizedBox(height: 15), Text(scenario['explanation'], style: const TextStyle(color: Colors.white, height: 1.5)), const SizedBox(height: 20), SizedBox(width: double.infinity, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.blueAccent, padding: const EdgeInsets.symmetric(vertical: 15)), onPressed: _nextQuestion, child: Text(_currentQuestionIndex < currentScenarios.length - 1 ? "Lanjut Skenario" : "Selesaikan Level", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))))]))],
+          if (!_showExplanation) ...[const Center(child: Text("Apakah pesan di atas Aman atau Phishing?", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold))),
+          const SizedBox(height: 20), Row(children: [Expanded(child: ElevatedButton.icon(style: ElevatedButton.styleFrom(backgroundColor: Colors.red[800], padding: const EdgeInsets.symmetric(vertical: 15), 
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))), icon: const Icon(Icons.warning, color: Colors.white), label: const Text("PHISHING!", style: TextStyle(color: Colors.white,
+          fontWeight: FontWeight.bold)), onPressed: () => _answerQuestion(true))), const SizedBox(width: 15), Expanded(child: ElevatedButton.icon(style: ElevatedButton.styleFrom(backgroundColor: Colors.green[800], 
+          padding: const EdgeInsets.symmetric(vertical: 15), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))), icon: const Icon(Icons.verified_user, color: Colors.white), 
+          label: const Text("AMAN", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)), onPressed: () => _answerQuestion(false)))])] else ...[Container(padding: const EdgeInsets.all(20), 
+          decoration: BoxDecoration(color: _isCorrect ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1), borderRadius: BorderRadius.circular(15), border: Border.all(color: _isCorrect ? Colors.green : Colors.red, width: 2)), 
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Row(children: [Icon(_isCorrect ? Icons.check_circle : Icons.cancel, color: _isCorrect ? Colors.green : Colors.red, size: 30), const SizedBox(width: 10),
+          Expanded(child: Text(_isCorrect ? "TEPAT SEKALI!" : "UPS, ANDA TERJEBAK HACKER!", style: TextStyle(color: _isCorrect ? Colors.green : Colors.red, fontWeight: FontWeight.bold, fontSize: 16)))]), const SizedBox(height: 15), 
+          Text(scenario['explanation'], style: const TextStyle(color: Colors.white, height: 1.5)), const SizedBox(height: 20), SizedBox(width: double.infinity, child: ElevatedButton(style: ElevatedButton.styleFrom
+          (backgroundColor: Colors.blueAccent, padding: const EdgeInsets.symmetric(vertical: 15)), onPressed: _nextQuestion, child: Text(_currentQuestionIndex < currentScenarios.length - 1 ? "Lanjut Skenario" : "Selesaikan Level",
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))))]))],
         ],
       ),
     );
