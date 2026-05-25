@@ -106,7 +106,7 @@ class _ToolsPageState extends State<ToolsPage> {
     'sekolah', 'kampus', 'kantor', 'pabrik', 'toko', 'pasar', 'mall', 'hotel',
     'rumah sakit', 'klinik', 'apotek', 'masjid', 'gereja', 'pura', 'vihara',
     'stadion', 'museum', 'galeri', 'perpustakaan', 'bioskop', 'teater', 'taman',
-    'bandara', 'pelabuhan', 'terminal', 'stasiun', 'jembatan', 'terowongan', 'bendungan',
+    'bandara', 'pelabuhan', 'terminal', 'stasiun', 'jembatan', 'terowongan', 'bendungan','monumen', 'tugu', 'patung', 'air terjun', 'gunung', 'lembah', 'hutan',
 
     // Transportasi
     'motor', 'truk', 'bus', 'kereta', 'pesawat', 'kapal', 'perahu', 'helikopter',

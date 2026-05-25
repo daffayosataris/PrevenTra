@@ -8,7 +8,6 @@ on:
     # Artinya aplikasi Anda akan melakukan audit kebocoran data setiap jam 12 malam.
     - cron: '0 17 * * *'
   
-  # Fitur ini memungkinkan Anda menjalankan robot secara manual dengan satu klik di GitHub
   workflow_dispatch: 
 
 jobs:
