@@ -1,34 +1,47 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import '../../data/datasources/database_helper.dart';
 import '../../data/datasources/hibp_service.dart';
 
 class BackgroundAuditService {
-  static final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
+  static final FlutterLocalNotificationsPlugin _notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   static Future<void> initNotifications() async {
-    const AndroidInitializationSettings androidInitSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const InitializationSettings initSettings = InitializationSettings(android: androidInitSettings);
+    const AndroidInitializationSettings androidInitSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const InitializationSettings settings = InitializationSettings(
+      android: androidInitSettings,
+    );
 
     await _notificationsPlugin.initialize(
-      settings: initSettings,
+      settings: settings,
     );
   }
 
   static Future<void> executeSilentAudit() async {
-    print("MEMBANGUNKAN APLIKASI: Memulai Audit Kredensial Latar Belakang...");
+    debugPrint(
+      'MEMBANGUNKAN APLIKASI: Memulai Audit Kredensial Latar Belakang...',
+    );
 
     final dbHelper = DatabaseHelper();
     final accounts = await dbHelper.getAccounts();
-    
-    if (accounts.isEmpty) return;
+
+    if (accounts.isEmpty) {
+      return;
+    }
 
     final hibpService = HibpService();
-    int totalLeaks = 0;
-    List<String> leakedAccounts = [];
 
-    for (var acc in accounts) {
-      int leaks = await hibpService.checkPasswordSafety(acc.password);
+    int totalLeaks = 0;
+    final List<String> leakedAccounts = [];
+
+    for (final acc in accounts) {
+      final int leaks =
+          await hibpService.checkPasswordSafety(acc.password);
+
       if (leaks > 0) {
         totalLeaks++;
         leakedAccounts.add(acc.title);
@@ -36,36 +49,44 @@ class BackgroundAuditService {
     }
 
     if (totalLeaks > 0) {
-      await _showBreachNotification(totalLeaks, leakedAccounts);
-    } else {
-      print("AUDIT SELESAI: Semua akun aman.");
+      await _showBreachNotification(
+        totalLeaks,
+        leakedAccounts,
+      );
     }
   }
 
-  static Future<void> _showBreachNotification(int leakCount, List<String> leakedAccounts) async {
-    // Membuat Channel ID Baru dan Memaksa Suara & Getaran
-    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-      'breach_alert_loud_v1', // ID baru agar Android me-reset aturan suaranya
+  static Future<void> _showBreachNotification(
+    int leakCount,
+    List<String> leakedAccounts,
+  ) async {
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+      'breach_alert_loud_v1',
       'Peringatan Kebocoran (Darurat)',
-      channelDescription: 'Notifikasi darurat bersuara nyaring saat data bocor',
-      importance: Importance.max, 
-      priority: Priority.high,    
-      playSound: true,            
-      enableVibration: true,      
-      color: Color(0xFFFF0000), 
+      channelDescription:
+          'Notifikasi darurat bersuara nyaring saat data bocor',
+      importance: Importance.max,
+      priority: Priority.high,
+      playSound: true,
+      enableVibration: true,
+      color: Color(0xFFFF0000),
       icon: '@mipmap/ic_launcher',
     );
 
-    const NotificationDetails platformDetails = NotificationDetails(android: androidDetails);
+    const NotificationDetails notificationDetails =
+        NotificationDetails(
+      android: androidDetails,
+    );
 
-    String bodyText = "Bahaya! $leakCount akun Anda (${leakedAccounts.join(', ')}) terdeteksi bocor di database peretas. Segera ganti sandi Anda!";
+    final String bodyText =
+        'Bahaya! $leakCount akun Anda (${leakedAccounts.join(', ')}) terdeteksi bocor.';
 
-    // PERBAIKAN: Menggunakan Named Parameter (id:, title:, body:)
     await _notificationsPlugin.show(
-      id: 1, 
-      title: '⚠️ PERINGATAN KEBOCORAN DATA BERBAHAYA!',
+      id: 1,
+      title: '⚠️ PERINGATAN KEBOCORAN DATA!',
       body: bodyText,
-      notificationDetails: platformDetails,
+      notificationDetails: notificationDetails,
     );
   }
 }

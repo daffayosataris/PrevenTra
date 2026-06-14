@@ -1,0 +1,35 @@
+name: Robot Audit Harian PrevenTra
+
+on:
+  schedule:
+    # ⏰ Menjadwalkan tembakan otomatis (Gunakan format Cron)
+    # Catatan: Waktu di server GitHub adalah UTC. 
+    # '0 5 * * *' berarti jam 05:00 UTC = Jam 12:00 Siang WIB (Waktu Madiun).
+    - cron: '0 5 * * *'
+  
+  workflow_dispatch: 
+    # Memunculkan tombol sakti di web GitHub agar Anda bisa menembak manual kapan saja!
+
+jobs:
+  tembak-notifikasi:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 1️⃣ Mengambil Kode PrevenTra
+      uses: actions/checkout@v3
+
+    - name: 2️⃣ Menyiapkan Mesin Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: 3️⃣ Memasang Peluru (Firebase Admin)
+      run: |
+        pip install firebase-admin
+
+    - name: 4️⃣ MENARIK PELATUK!
+      env:
+        # Mengambil kunci rahasia dari brankas GitHub Secrets
+        FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+      run: |
+        python scripts/trigger_audit.py

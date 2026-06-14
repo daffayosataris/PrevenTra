@@ -1,10 +1,12 @@
+// Lokasi: lib/main.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'core/utils/background_audit_service.dart'; 
-import 'presentation/providers/vault_provider.dart'; // 👉 KUNCI JAWABAN: Import VaultProvider
-import 'presentation/pages/auth_page.dart';
+import 'presentation/providers/vault_provider.dart'; 
+import 'presentation/pages/splash_screen_page.dart'; 
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -23,14 +25,18 @@ void main() async {
   await BackgroundAuditService.initNotifications();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  // Meminta Izin & Mengambil Token FCM
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   await messaging.requestPermission(alert: true, badge: true, sound: true);
   
-  String? token = await messaging.getToken();
-  print("\n====== T O K E N   F C M   H P   I N I ======");
-  print(token);
-  print("=============================================\n");
+  // 👉 KODE EMAS BARU: Mendaftarkan HP ini ke kelompok (Topic) Audit Harian
+  try {
+    await messaging.subscribeToTopic('audit_harian');
+    debugPrint("\n=============================================");
+    debugPrint("🔥 MISI SUKSES: Yang Mulia, HP ini telah resmi bergabung ke topik 'audit_harian'!");
+    debugPrint("=============================================\n");
+  } catch (e) {
+    debugPrint("❌ GAGAL BERGABUNG KE TOPIK: $e");
+  }
 
   runApp(const MyApp());
 }
@@ -40,15 +46,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 👉 PERBAIKAN: Membungkus aplikasi dengan MultiProvider agar data tidak hilang
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => VaultProvider()),
       ],
       child: MaterialApp(
         title: 'PrevenTra',
-        theme: ThemeData.dark(),
-        home: const AuthPage(),
+        // TEMA TERANG (LIGHT THEME) YANG BERSIH DAN PROFESIONAL
+        theme: ThemeData(
+          brightness: Brightness.light,
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: const Color(0xFFF5F7FA), // Latar belakang abu-abu sangat muda
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.blueAccent,
+            elevation: 0,
+            centerTitle: true,
+            iconTheme: IconThemeData(color: Colors.white),
+            titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          useMaterial3: true,
+        ),
+        // Menjadikan Splash Screen dengan animasi Fade-In sebagai halaman awal aplikasi
+        home: const SplashScreenPage(),
         debugShowCheckedModeBanner: false,
       ),
     );

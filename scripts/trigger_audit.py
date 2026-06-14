@@ -3,35 +3,40 @@ import json
 import firebase_admin
 from firebase_admin import credentials, messaging
 
-def main():
-    # Mengambil kunci rahasia dari brankas GitHub Secrets
-    creds_json = os.environ.get('FIREBASE_CREDENTIALS')
-    device_token = os.environ.get('FCM_DEVICE_TOKEN')
-
-    if not creds_json or not device_token:
-        print("ERROR FATAL: Kunci Firebase atau Token FCM tidak ditemukan di Environment!")
+def trigger_audit():
+    print("Mempersiapkan amunisi Sinyal Audit...")
+    
+    # 1. Mengambil JSON rahasia dari Brankas GitHub Actions (Environment Variable)
+    cred_json = os.environ.get('FIREBASE_CREDENTIALS')
+    if not cred_json:
+        print("❌ ERROR FATAL: Kunci Firebase tidak ditemukan di brankas!")
         return
 
-    # Inisialisasi Firebase Admin dengan kunci JSON
-    cred_dict = json.loads(creds_json)
-    cred = credentials.Certificate(cred_dict)
-    firebase_admin.initialize_app(cred)
+    # 2. Membaca JSON dan Membuka Akses ke Google
+    try:
+        cred_dict = json.loads(cred_json)
+        cred = credentials.Certificate(cred_dict)
+        if not firebase_admin._apps:
+            firebase_admin.initialize_app(cred)
+    except Exception as e:
+        print(f"❌ ERROR OTENTIKASI: Kunci rusak atau tidak valid. Detail: {e}")
+        return
 
-    # Merakit peluru Silent Push Notification
-    # Kita menggunakan "data" agar aplikasi terbangun di background (sesuai logika main.dart Anda)
+    # 3. Merakit peluru Silent Push khusus untuk topik 'audit_harian'
     message = messaging.Message(
         data={
-            'action': 'TRIGGER_AUDIT'
+            'action': 'TRIGGER_AUDIT',
         },
-        token=device_token
+        topic='audit_harian',
     )
 
-    # Menembakkan sinyal ke HP Yang Mulia
+    # 4. Tarik Pelatuknya!
     try:
         response = messaging.send(message)
-        print(f'MISI SUKSES! Sinyal TRIGGER_AUDIT berhasil ditembakkan. ID Pesan: {response}')
+        print(f"🔥 MISI SUKSES BESAR! Sinyal Audit diledakkan serentak ke semua HP di dunia.")
+        print(f"🆔 ID Tembakan: {response}")
     except Exception as e:
-        print(f'GAGAL MENEMBAK: {e}')
+        print(f"❌ GAGAL MENEMBAK: {e}")
 
 if __name__ == '__main__':
-    main()
+    trigger_audit()
