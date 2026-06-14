@@ -1,42 +1,78 @@
 import os
 import json
 import firebase_admin
-from firebase_admin import credentials, messaging
+
+from firebase_admin import (
+    credentials,
+    messaging
+)
 
 def trigger_audit():
-    print("Mempersiapkan amunisi Sinyal Audit...")
-    
-    # 1. Mengambil JSON rahasia dari Brankas GitHub Actions (Environment Variable)
-    cred_json = os.environ.get('FIREBASE_CREDENTIALS')
-    if not cred_json:
-        print("❌ ERROR FATAL: Kunci Firebase tidak ditemukan di brankas!")
-        return
-
-    # 2. Membaca JSON dan Membuka Akses ke Google
-    try:
-        cred_dict = json.loads(cred_json)
-        cred = credentials.Certificate(cred_dict)
-        if not firebase_admin._apps:
-            firebase_admin.initialize_app(cred)
-    except Exception as e:
-        print(f"❌ ERROR OTENTIKASI: Kunci rusak atau tidak valid. Detail: {e}")
-        return
-
-    # 3. Merakit peluru Silent Push khusus untuk topik 'audit_harian'
-    message = messaging.Message(
-        data={
-            'action': 'TRIGGER_AUDIT',
-        },
-        topic='audit_harian',
+    print(
+        "Mempersiapkan amunisi Sinyal Audit..."
     )
 
-    # 4. Tarik Pelatuknya!
-    try:
-        response = messaging.send(message)
-        print(f"🔥 MISI SUKSES BESAR! Sinyal Audit diledakkan serentak ke semua HP di dunia.")
-        print(f"🆔 ID Tembakan: {response}")
-    except Exception as e:
-        print(f"❌ GAGAL MENEMBAK: {e}")
+    cred_json = os.environ.get(
+        "FIREBASE_CREDENTIALS"
+    )
 
-if __name__ == '__main__':
+    if not cred_json:
+        print(
+            "❌ FIREBASE_CREDENTIALS tidak ditemukan"
+        )
+        return
+
+    try:
+        cred_dict = json.loads(
+            cred_json
+        )
+
+        cred = credentials.Certificate(
+            cred_dict
+        )
+
+        if not firebase_admin._apps:
+            firebase_admin.initialize_app(
+                cred
+            )
+
+    except Exception as e:
+        print(
+            f"❌ ERROR OTENTIKASI: {e}"
+        )
+        return
+
+    message = messaging.Message(
+        notification=messaging.Notification(
+            title="PrevenTra Audit",
+            body="Menjalankan audit otomatis"
+        ),
+        data={
+            "action": "TRIGGER_AUDIT"
+        },
+        android=messaging.AndroidConfig(
+            priority="high"
+        ),
+        topic="audit_harian"
+    )
+
+    try:
+        response = messaging.send(
+            message
+        )
+
+        print(
+            "🔥 MISI SUKSES BESAR!"
+        )
+
+        print(
+            f"🆔 ID Tembakan: {response}"
+        )
+
+    except Exception as e:
+        print(
+            f"❌ GAGAL MENEMBAK: {e}"
+        )
+
+if __name__ == "__main__":
     trigger_audit()
